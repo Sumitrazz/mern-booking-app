@@ -10,9 +10,9 @@ export type SignInFormData = {
 };
 
 const SignIn = () => {
-    const {showToast} = useAppContext();
-    const navigate = useNavigate();
-    const queryClient = useQueryClient();
+  const { showToast } = useAppContext();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const {
     register,
     formState: { errors },
@@ -20,19 +20,19 @@ const SignIn = () => {
   } = useForm<SignInFormData>();
   const mutation = useMutation(apiClient.signIn, {
     onSuccess: async () => {
-     showToast({message: "Sign in is Successful!", type:"SUCCESS"})
-     await queryClient.invalidateQueries("validateToken");
-     navigate("/");
+      showToast({ message: "Sign in is Successful!", type: "SUCCESS" });
+      await queryClient.invalidateQueries("validateToken");
+      navigate("/");
     },
     onError: (error: Error) => {
-        showToast({message: error.message, type: "ERROR"})
+      showToast({ message: error.message, type: "ERROR" });
     },
-
   });
 
   const onSubmit = handleSubmit((data) => {
     mutation.mutate(data);
   });
+  
   return (
     <form className="flex flex-col gap-5" onSubmit={onSubmit}>
       <h2 className="text-3xl font-bold">Sign In</h2>
@@ -67,7 +67,10 @@ const SignIn = () => {
       </label>
       <span className="flex items-center justify-between">
         <span className="text-sm">
-          Not Register? <Link className="underline" to="/register">Create an account here</Link>
+          Not Register?{" "}
+          <Link className="underline" to="/register">
+            Create an account here
+          </Link>
         </span>
         <button
           type="submit"
