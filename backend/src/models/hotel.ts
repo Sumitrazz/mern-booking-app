@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-//import { HotelType } from "../shared/types";
-
 export type HotelType = {
   _id: string;
   userId: string;
