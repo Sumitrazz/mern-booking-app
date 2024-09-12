@@ -11,7 +11,7 @@ import { HotelFormData } from "./ManageHotelForm";
             <div className="grid grid-cols-5 gap-3">
                 {hotelFacilities.map((facility)=>(
                     <label className="text-sm flex gap-1 text-gray-700" >
-                        <input type="checkbox" value={facility}{...register("facilites", {
+                        <input type="checkbox" value={facility}{...register("facilities", {
                             validate: (facilites)=> {
                              if(facilites && facilites.length >0){
                                 return true;
@@ -24,8 +24,8 @@ import { HotelFormData } from "./ManageHotelForm";
                     </label>
                 ))}
             </div>
-            {errors.facilites && (
-                <span className="text-red-500 text-sm font-bold">{errors.facilites.message}</span>
+            {errors.facilities && (
+                <span className="text-red-500 text-sm font-bold">{errors.facilities.message}</span>
             )}
         </div>
     )
