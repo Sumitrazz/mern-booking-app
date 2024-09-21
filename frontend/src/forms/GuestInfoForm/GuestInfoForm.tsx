@@ -5,7 +5,7 @@ import { useAppContext } from "../../contexts/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 type Props = {
-  hotelid: string;
+  hotelId: string;
   pricePerNight: number;
 };
 
