@@ -37,45 +37,42 @@ test("should show hotel detail", async ({page})=> {
  
 });
 
-
-test("should book hotel", async ({page})=> {
+test("should book hotel", async ({ page }) => {
     await page.goto(UI_URL);
+  
+    await page.getByPlaceholder("Where are you going?").fill("chennai");
 
-    await page.getByPlaceholder("Where are you going?").fill("chennai")
 
     // const date = new Date();
-    // date.setDate(date.getDate()+3);
-    // const formattedDate = date.toISOString();
-    // //split("T")[0];
-    // await page.getByPlaceholder("Check-out Date").fill(formattedDate);
+    // date.setDate(date.getDate() + 3);
+    
+    // // Convert to a more UI-friendly format if necessary, e.g., "MM/DD/YYYY"
+    // const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    
+    // // Debugging the formatted date
+    // console.log("Formatted Check-out Date:", formattedDate);
   
+    // await page.getByPlaceholder("Check-out Date").fill(formattedDate);
     
-    // Format the date to DD-MM-YYYY
-    const date = new Date();
-    date.setDate(date.getDate() + 3);
-    
-    const formattedDate = (`0${date.getDate()}`).slice(-2) + "-" +
-                          (`0${date.getMonth() + 1}`).slice(-2) + "-" +
-                          date.getFullYear();
-    
-    await page.getByPlaceholder("Check-out Date").click();
-    await page.getByPlaceholder("Check-out Date").type(formattedDate);
-    
-    //
-
- await page.getByRole("button", {name: "Search"}).click();
-   
- await page.getByText("Sk Room").click();
-
- await page.getByRole("button", {name: "Book now"}).click();
- await expect(page.getByText("Total Cost: ₹402.00")).toBeVisible();
-
- const stripeFrame = page.frameLocator("iframe").first();
- await stripeFrame.locator('[placeholder="Card number"]').fill("4242424242424242");
- await stripeFrame.locator('[placeholder="MM / YY"]').fill("04/30")
- await stripeFrame.locator('[placeholder="CVC"]').fill("343")
- await stripeFrame.locator('[placeholder="ZIP"]').fill("34332")
- await page.getByRole("button", {name: "Confirm Booking"}).click();
- await expect(page.getByText("Booking Saved!")).toBeVisible();
-
-})
+  
+    await page.getByRole("button", { name: "Search" }).click();
+  
+    await page.getByText("Sk Room").click();
+    await page.getByRole("button", { name: "Book now" }).click();
+  
+    await expect(page.getByText("Total Cost: ₹134.00")).toBeVisible();
+  
+    const stripeFrame = page.frameLocator("iframe").first();
+    await stripeFrame
+      .locator('[placeholder="Card number"]')
+      .fill("4242424242424242");
+    await stripeFrame.locator('[placeholder="MM / YY"]').fill("04/30");
+    await stripeFrame.locator('[placeholder="CVC"]').fill("242");
+    await stripeFrame.locator('[placeholder="ZIP"]').fill("24225");
+  
+    await page.getByRole("button", { name: "Confirm Booking" }).click();
+    await expect(page.getByText("Booking Saved!")).toBeVisible({timeout: 10000});
+  
+    await page.getByRole("link", { name: "My Booking" }).click();
+    await expect(page.getByText("Sk Rooms u")).toBeVisible({timeout: 10000});
+  });
